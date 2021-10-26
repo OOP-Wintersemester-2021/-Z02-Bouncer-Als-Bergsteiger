@@ -22,6 +22,39 @@ public class BouncerAlsBergsteiger extends BouncerApp {
     @Override
     public void bounce() {
         loadMap("Mountain");
+        // Bouncer bewegt sich zum Fuße des Berges ...
+        moveToBaseCamp();
+        // ... und beginnt dann mit dem Aufstieg zum Gipfel
+        ascend();
+    }
+
+    private void moveToBaseCamp() {
+        while (bouncer.canMoveForward()) {
+            bouncer.move();
+        }
+    }
+
+    private void ascend() {
+        while (!bouncer.isOnFieldWithColor(FieldColor.BLUE)) {
+            climbToNextLevel();
+        }
+    }
+
+    private void climbToNextLevel() {
+        bouncer.turnLeft();
+        while (bouncer.canNotMoveRight()) {
+            bouncer.move();
+        }
+        turnRight();
+        while (bouncer.canMoveForward()) {
+            bouncer.move();
+        }
+    }
+
+    private void turnRight() {
+        for (int i = 0; i < 3; i++) {
+            bouncer.turnLeft();
+        }
     }
 
     public static void main(String[] args) {
